@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сюрприз</title>
+    <style>
+        * { margin: 0; padding: 0; }
+        body {
+            background: #111;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            color: #fff;
+            cursor: pointer;
+            user-select: none;
+        }
+        #hint {
+            font-size: 2.5rem;
+            text-align: center;
+            transition: opacity 0.3s;
+        }
+        #scare {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #000;
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+        #scare iframe {
+            width: 100vw;
+            height: 100vh;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="hint">👻 Нажми в любом месте</div>
+
+    <div id="scare">
+        <iframe 
+            src=https://m.youtube.com/watch?v=yK6ajJSXwSg?autoplay=1&mute=0&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&fs=1"
+            allow="autoplay; fullscreen; encrypted-media"
+            allowfullscreen
+        ></iframe>
+    </div>
+
+    <script>
+        document.addEventListener('click', function scareTrigger() {
+            document.getElementById('hint').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('hint').style.display = 'none';
+            }, 300);
+
+            const scare = document.getElementById('scare');
+            scare.style.display = 'flex';
+
+            // Запрос полноэкранного режима для iframe
+            const iframe = document.querySelector('#scare iframe');
+            if (iframe.requestFullscreen) {
+                iframe.requestFullscreen().catch(() => {});
+            }
+
+            document.removeEventListener('click', scareTrigger);
+        });
+    </script>
+</body>
+</html>
+ 
